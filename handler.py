@@ -13,7 +13,8 @@ NOTE:
 import os
 import logging
 import boto3
-from StringIO import StringIO
+from io import StringIO
+from io import BytesIO
 from google.cloud import storage
 
 # Setup logging
@@ -35,7 +36,8 @@ def lambda_handler(event, context):
         LOG.debug('About to copy %d files', len(l_t_bucketKey))
         for bucket, key in l_t_bucketKey:
             try:
-                inFileObj = StringIO()
+                #inFileObj = StringIO()
+                inFileObj = BytesIO()
                 S3.download_fileobj(
                     Bucket=bucket,
                     Key=key,

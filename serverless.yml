@@ -1,6 +1,4 @@
 service: s3-to-gcs 
-  - serverless-plugin-existing-s3
-  - serverless-python-requirements
 
 custom:
   pythonRequirements:
@@ -9,7 +7,7 @@ custom:
 provider:
   name: aws
   runtime: python3.6
-  region: ap-southeast-2
+  region: eu-central-1
 
 # you can add statements to the Lambda function's IAM Role here
   iamRoleStatements:
@@ -40,7 +38,7 @@ provider:
 
 functions:
   s3_to_gcs:
-    handler: handler.s3_to_gcs
+    handler: handler.lambda_handler
     events:
       - existingS3:
           bucket: ${opt:aws_bucket}
@@ -49,3 +47,7 @@ functions:
     environment:
       GOOGLE_APPLICATION_CREDENTIALS: service-account.json
       GCS_BUCKET_NAME: ${opt:gcs_bucket}
+
+plugins:
+  - serverless-python-requirements
+  - serverless-plugin-existing-s3

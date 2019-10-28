@@ -11,7 +11,7 @@ s3-to-gcs is a lambda function that allows you to perform a one way file copy fr
 ### Google Cloud Platform setup
 1. Create a service account for the lambda function by following [this guide](https://cloud.google.com/iam/docs/creating-managing-service-accounts)
 2. Create a set of access keys for the service account by following [this guide](https://cloud.google.com/iam/docs/creating-managing-service-account-keys). Make sure the key type is JSON.
-3. Save the access key json file as `service-account.json` in the root folder of this repository
+3. Save the access key json file as `service-account.json` in the root folder of this repository (don't worry, it's already gitignored)
 4. Assign "Legacy Bucket Writer" role to the GCS bucket for this service account
 
 ## Installation
@@ -30,15 +30,19 @@ Install the other dependencies by running
 npm install
 ```
 
+```bash
+sls plugin install -n serverless-python-requirements --aws_bucket <aws_bucket_name> --gcs_bucket <gcs_bucket_name>
+sls plugin install -n serverless-plugin-existing-s3 --aws_bucket <aws_bucket_name> --gcs_bucket <gcs_bucket_name>
+```
 
 ### Deploy the lambda function
 
 ```bash
 # This deploys the lambda function, the IAM role,
-sls deploy --aws_bucket <aws_bucket_name> --gcs_bucket <gcs_bucket_name>
+sls deploy --aws_bucket <aws_bucket_name> --gcs_bucket <gcs_bucket_name> --aws-profile <aws_profile>
 
 # This deploys the S3 event trigger for an existing S3 bucket
-sls s3deploy --aws_bucket <aws_bucket_name>
+sls s3deploy --aws_bucket <aws_bucket_name> --aws-profile <aws_profile>
 ```
 
 ## Contributing
